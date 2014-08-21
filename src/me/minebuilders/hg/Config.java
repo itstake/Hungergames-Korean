@@ -44,7 +44,7 @@ public class Config {
 
 	public Config(HG plugin) {
 		if (!new File(plugin.getDataFolder(), "config.yml").exists()) {
-			Util.log("Config not found. Generating default config!");
+			Util.log("컨핑이 존재하지 않습니다! 기본 컨핑을 만듭니다!");
 			plugin.saveDefaultConfig();
 		}
 		
@@ -76,7 +76,7 @@ public class Config {
 			try {
 				Vault.setupEconomy();
 			} catch (NoClassDefFoundError e) {
-				Util.log("Unable to setup vault! Rewards will not be given out..");
+				Util.log("Valut 가 없습니다! 보상을 지급할 수 없게 됩니다..");
 				giveReward = false;
 			}
 		}
