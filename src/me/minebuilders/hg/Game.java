@@ -177,9 +177,9 @@ public class Game {
 
 	public void join(Player p) {
 		if (status != Status.WAITING && status != Status.STOPPED && status != Status.COUNTDOWN) {
-			p.sendMessage(ChatColor.RED + "�� �Ʒ����� ���� �غ���� �ʾҽ��ϴ�! ���߿� �ٽ� ���� �ּ���!");
+			p.sendMessage(ChatColor.RED + "이 아레나는 아직 준비되지 않았습니다! 나중에 다시 들어와 주세요!");
 		} else if (maxplayers <= players.size()) {
-			p.sendMessage(ChatColor.RED + name + " �� �� á���ϴ�!");
+			p.sendMessage(ChatColor.RED + name + " 는 꽉 찼습니다!");
 		} else {
 			if (p.isInsideVehicle()) {
 				p.leaveVehicle();
@@ -192,7 +192,7 @@ public class Game {
 			if (players.size() >= minplayers && status.equals(Status.WAITING)) {
 				startPreGame();
 			} else if (status == Status.WAITING) {
-				msgDef("&4(&3"+p.getName() + "&b Has joined the game"+(minplayers-players.size()<= 0?"!":": "+(minplayers-players.size())+" players to start!")+"&4)");
+				msgDef("&4(&3"+p.getName() + "&b 님이 "+(minplayers-players.size()<= 0?" 게임에 들어오셨습니다.");
 			}
 			kitHelp(p);
 			if (players.size() == 1)
@@ -204,12 +204,6 @@ public class Game {
 	}
 
 	public void kitHelp(Player p) {
-		String kit = HG.plugin.kit.getKitList();
-		Util.scm(p, "&8     ");
-		Util.scm(p, "&9&l>----------[&b&lWelcome to HungerGames&9&l]----------<");
-		Util.scm(p, "&9&l - &bPick a kit using &c/hg kit <kit-name>");
-		Util.scm(p, "&9&lKits:&b" + kit);
-		Util.scm(p, "&9&l>------------------------------------------<");
 	}
 
 	public void respawnAll() {
@@ -324,12 +318,12 @@ public class Game {
 			this.s1 = (Sign) c.getRelative(face).getState();
 			this.s2 = (Sign) s1.getBlock().getRelative(face).getState();
 
-			s.setLine(0, ChatColor.DARK_BLUE + "" + ChatColor.BOLD + "HungerGames");
-			s.setLine(1, ChatColor.BOLD + name);
-			s.setLine(2, ChatColor.BOLD + "Click To Join");
-			s1.setLine(0, ChatColor.DARK_BLUE + "" + ChatColor.BOLD + "Game Status");
+			s.setLine(0, ChatColor.BLUE + "[미니게임]");
+			s.setLine(2, name);
+			s.setLine(1, ChatColor.GREEN + "들어가기");
+			s1.setLine(0, ChatColor.DARK_BLUE + "" + ChatColor.BOLD + "게임 정보");
 			s1.setLine(1, status.getName());
-			s2.setLine(0, ChatColor.DARK_BLUE + "" + ChatColor.BOLD + "Alive");
+			s2.setLine(0, ChatColor.DARK_BLUE + "" + ChatColor.BOLD + "살아있는 플레이어");
 			s2.setLine(1, ChatColor.BOLD + "" + 0 + "/" + maxplayers);
 			s.update(true);
 			s1.update(true);
@@ -379,11 +373,11 @@ public class Game {
 				Vault.economy.depositPlayer(s, db);
 				Player p = Bukkit.getPlayer(s);
 				if (p != null)
-				Util.msg(p, "&aYou won " + db + " for winning HungerGames!");
+				Util.msg(p, "&a미니게임에서 이겨" + db + " MGP 를 받았습니다!");
 			}
 		}
 
-		Util.broadcast("&l&3" + Util.translateStop(win) + " &l&bWon HungerGames at arena " + name + "!");
+		Util.broadcast("&l&3" + Util.translateStop(win) + " &l&b님이 " + name + " 에서 승리하셨습니다!");
 		if (!blocks.isEmpty()) {
 			new Rollback(this);
 		} else {
@@ -406,7 +400,7 @@ public class Game {
 				stop();
 			}
 		} else if (status == Status.WAITING) {
-			msgDef("&3&l"+p.getName() + "&l&c Has left the game"+(minplayers-players.size()<= 0?"!":": "+(minplayers-players.size())+" players to start!"));
+			msgDef("&3&l"+p.getName() + "&l&c 님이 게임을 나가셨습니다.");
 		}
 		updateLobbyBlock();
 		sb.restoreSB(p);
