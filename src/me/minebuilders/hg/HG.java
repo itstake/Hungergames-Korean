@@ -74,7 +74,7 @@ public class HG extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new CancelListener(this), this);
 		getServer().getPluginManager().registerEvents(new GameListener(this), this);
 		loadCmds();
-		Util.log("Hugergames has been enabled!");
+		Util.log("헝거게임 플러그인 켜짐!");
 	}
 	
 	@Override
@@ -87,7 +87,7 @@ public class HG extends JavaPlugin {
 		kit = null;
 		ism = null;
 		ri = null;
-		Util.log("Hugergames has been disabled!");
+		Util.log("헝거게임 플러그인 꺼짐!");
 	}
 
 	public void loadCmds() {
