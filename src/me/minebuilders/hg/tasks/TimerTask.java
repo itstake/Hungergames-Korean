@@ -27,7 +27,7 @@ public class TimerTask implements Runnable {
 		remainingtime = (remainingtime - 30);
 
 		if (remainingtime == 30 && HG.plugin.getConfig().getBoolean("settings.teleport-at-end")) {
-			game.msgAll("&l&cThe game is almost over, fight to the death!");
+			game.msgAll("게임이 거의 끝나갑니다. 싸우세요!!");
 			game.respawnAll();
 		} else if (this.remainingtime < 10) {
 			stop();
@@ -35,8 +35,8 @@ public class TimerTask implements Runnable {
 		} else {
 			int minutes = this.remainingtime / 60;
 			int asd = Integer.valueOf(this.remainingtime % 60);
-			if (minutes != 0) game.msgAll(ChatColor.GREEN+"The game is ending in " + minutes + (asd == 0?" minute(s)!":" minute(s), and " + asd+" seconds!"));
-			else game.msgAll(ChatColor.GREEN+"The game is ending in " + this.remainingtime +" seconds!");
+			if (minutes != 0) game.msgAll("이 게임이 " + minutes + (asd == 0?" 분후에 끝납니다!":" 분, " + asd+" 초후에 끝납니다!"));
+			else game.msgAll("이 게임이 " + this.remainingtime +" 초후에 끝납니다!");
 		}
 	}
 	
