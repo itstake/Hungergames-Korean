@@ -192,7 +192,7 @@ public class Game {
 			if (players.size() >= minplayers && status.equals(Status.WAITING)) {
 				startPreGame();
 			} else if (status == Status.WAITING) {
-				msgDef("&4(&3"+p.getName() + "&b 님이 "+(minplayers-players.size()<= 0?" 게임에 들어오셨습니다.");
+				msgDef(p.getName() + " 님이 "+name+" 게임에 들어오셨습니다.");
 			}
 			kitHelp(p);
 			if (players.size() == 1)
@@ -377,7 +377,7 @@ public class Game {
 			}
 		}
 
-		Util.broadcast("&l&3" + Util.translateStop(win) + " &l&b님이 " + name + " 에서 승리하셨습니다!");
+		Util.broadcast(Util.translateStop(win) + " 으로 " + name + " 에서 승리하셨습니다!");
 		if (!blocks.isEmpty()) {
 			new Rollback(this);
 		} else {
@@ -400,7 +400,7 @@ public class Game {
 				stop();
 			}
 		} else if (status == Status.WAITING) {
-			msgDef("&3&l"+p.getName() + "&l&c 님이 게임을 나가셨습니다.");
+			msgDef(p.getName() + "&l&c 님이 게임을 나가셨습니다.");
 		}
 		updateLobbyBlock();
 		sb.restoreSB(p);
