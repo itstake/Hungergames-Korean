@@ -318,7 +318,7 @@ public class Game {
 			this.s1 = (Sign) c.getRelative(face).getState();
 			this.s2 = (Sign) s1.getBlock().getRelative(face).getState();
 
-			s.setLine(0, ChatColor.BLUE + "[미니게임]");
+			s.setLine(0, ChatColor.AQUA + "[미니게임]");
 			s.setLine(2, name);
 			s.setLine(1, ChatColor.GREEN + "들어가기");
 			s1.setLine(0, ChatColor.DARK_BLUE + "" + ChatColor.BOLD + "게임 정보");
