@@ -38,7 +38,7 @@ import org.bukkit.util.Vector;
 public class GameListener implements Listener {
 
 	private HG plugin;
-	private String tsn = ChatColor.GOLD + "TrackingStick " + ChatColor.GREEN + "Uses: ";
+	private String tsn = ChatColor.GOLD + "플레이어 추적 막대기 " + ChatColor.GREEN + "사용법: ";
 	private ItemStack trackingStick;
 
 	public GameListener(HG plugin) {
@@ -69,8 +69,8 @@ public class GameListener implements Listener {
 				Player p = Bukkit.getPlayer(r);
 				if (p != null) {
 					Util.scm(p,"&a&l[]------------------------------------------[]");
-					Util.scm(p, "&a&l |&3&l   You have been given a player-tracking stick! &a&l |");
-					Util.scm(p, "&a&l |&3&l   Swing the stick to track players!                &a&l |");
+					Util.scm(p, "&a&l |&3&l   플레이어-추적 막대를 얻으셨습니다! &a&l |");
+					Util.scm(p, "&a&l |&3&l   스틱을 클릭해 플레이어들을 추적하세요!                &a&l |");
 					Util.scm(p,"&a&l[]------------------------------------------[]");
 					p.getInventory().addItem(trackingStick);
 				}
@@ -92,9 +92,9 @@ public class GameListener implements Listener {
 			LivingEntity killer = p.getKiller();
 
 			if (killer != null) {
-				g.msgDef("&l&d" + HG.killmanager.getKillString(p.getName(), killer));
+				g.msgDef(HG.killmanager.getKillString(p.getName(), killer));
 			} else {
-				g.msgDef("&d" + HG.killmanager.getDeathString(p.getLastDamageCause().getCause(), p.getName()));
+				g.msgDef(HG.killmanager.getDeathString(p.getLastDamageCause().getCause(), p.getName()));
 			}
 			event.setDeathMessage(null);
 			
@@ -134,7 +134,7 @@ public class GameListener implements Listener {
 			int uses = 0;
 			uses = Integer.parseInt(im.getDisplayName().replace(tsn, ""));
 			if (uses == 0) {
-				p.sendMessage(ChatColor.RED + "This trackingstick is out of uses!");
+				p.sendMessage(ChatColor.RED + "이 추적 막대기는 더이상 사용할 수 없습니다");
 			} else {
 				boolean foundno = true;
 				for (Entity e : p.getNearbyEntities(120, 50, 120)) {
@@ -143,14 +143,14 @@ public class GameListener implements Listener {
 						foundno = false;
 						Location l = e.getLocation();
 						int range = (int) p.getLocation().distance(l);
-						Util.msg(p, ("&3" + ((Player)e).getName()) + "&b is " + range + " blocks away from you:&3 " + getDirection(p.getLocation().getBlock(), l.getBlock()));
+						Util.msg(p, (((Player)e).getName()) + " 님이 당신으로부터 " + range + " 블록 떨어져 있습니다: " + getDirection(p.getLocation().getBlock(), l.getBlock()));
 						i.setItemMeta(im);
 						p.updateInventory();
 						return;
 					} 
 				}
 				if (foundno)
-					Util.msg(p, ChatColor.RED + "Couldn't locate any nearby players!");
+					Util.msg(p,"가까운 곳에 있는 플레이어를 찾을 수 없습니다!");
 
 			}
 		}
@@ -163,23 +163,23 @@ public class GameListener implements Listener {
 		float cal = (y * 10);
 		int c = (int) cal;
 		if (c<=1 && c>=-1) {
-			return "South";
+			return "남쪽";
 		} else if (c>-14 && c<-1) {
-			return "SouthWest";
+			return "남서쪽";
 		} else if (c>=-17 && c<=-14) {
-			return "West";
+			return "서쪽";
 		} else if (c>-29 && c<-17) {
-			return "NorthWest";
+			return "북서쪽";
 		} else if (c>17 && c<29) {
-			return "NorthEast";
+			return "북동쪽";
 		} else if (c<=17 && c>=14) {
-			return "East";
+			return "동쪽";
 		} else if (c>1 && c<14) {
-			return "SouthEast";
+			return "남동쪽";
 		}  else if (c<=29 && c>=-29) {
-			return "North";
+			return "북쪽";
 		} else {
-			return "UnKnown";
+			return "알수없음";
 		}
 	}
 
@@ -212,7 +212,7 @@ public class GameListener implements Listener {
 				if (g.getStatus() != Status.RUNNING) {
 					event.setCancelled(true);
 				} else if (pd.isOnTeam(p.getName()) && damager instanceof Player && pd.getTeam().isOnTeam(((Player)damager).getName())) {
-					Util.scm(((Player)damager), "&c" + p.getName() + " is on your team!");
+					Util.scm(((Player)damager),p.getName() + " 님은 당신의 팀입니다!");
 					event.setCancelled(true);
 				} else if (event.isCancelled()) event.setCancelled(false);
 			}
@@ -226,7 +226,7 @@ public class GameListener implements Listener {
 			Status st = plugin.players.get(p.getName()).getGame().getStatus();
 			if (st == Status.WAITING || st == Status.COUNTDOWN) {
 				event.setCancelled(true);
-				p.sendMessage(ChatColor.RED + "You cannot interact until the game has started!");
+				p.sendMessage("You cannot interact until the game has started!");
 			}
 		}
 	}
@@ -238,16 +238,16 @@ public class GameListener implements Listener {
 			Block b = event.getClickedBlock();
 			if (b.getType().equals(Material.WALL_SIGN)) {
 				Sign sign = (Sign) b.getState();
-				if (sign.getLine(0).equals(ChatColor.DARK_BLUE + "" + ChatColor.BOLD + "HungerGames")) {
-					Game game = HG.manager.getGame(sign.getLine(1).substring(2));
+				if (sign.getLine(0).equals(ChatColor.AQUA + "[미니게임]")) {
+					Game game = HG.manager.getGame(sign.getLine(2).substring(2));
 					if (game == null) {
-						Util.msg(p, ChatColor.RED + "This arena does not exist!");
+						Util.msg(p, ChatColor.RED + "그 미니게임은 존재하지 않습니다!");
 						return;
 					} else {
 						if (p.getItemInHand().getType() == Material.AIR) {
 							game.join(p);
 						} else {
-							Util.msg(p, ChatColor.RED + "Click the sign with your hand!");
+							Util.msg(p, ChatColor.RED + "손으로 표지판을 클릭하세요!");
 						}
 					}
 				} 
@@ -273,7 +273,7 @@ public class GameListener implements Listener {
 				
 				if (g.getStatus() == Status.RUNNING || g.getStatus() == Status.BEGINNING) {
 					if (!Config.blocks.contains(b.getType().getId())) {
-						p.sendMessage(ChatColor.RED + "You cannot edit this block type!");
+						p.sendMessage(ChatColor.RED + "당신은 이 블록을 부술 수 없습니다!");
 						event.setCancelled(true);
 						return;
 					} else {
@@ -281,7 +281,7 @@ public class GameListener implements Listener {
 						return;
 					}
 				} else {
-					p.sendMessage(ChatColor.RED + "The game is not running!");
+					p.sendMessage(ChatColor.RED + "이 게임은 진행중이 아닙니다!");
 					event.setCancelled(true);
 					return;
 				}
@@ -305,7 +305,7 @@ public class GameListener implements Listener {
 				Game g = plugin.players.get(p.getName()).getGame();
 				if (g.getStatus() == Status.RUNNING) {
 					if (!Config.blocks.contains(b.getType().getId())) {
-						p.sendMessage(ChatColor.RED + "You cannot edit this block type!");
+						p.sendMessage(ChatColor.RED + "당신은 이 블록을 부술 수 없습니다!");
 						event.setCancelled(true);
 						return;
 					} else {
@@ -313,7 +313,7 @@ public class GameListener implements Listener {
 						return;
 					}
 				} else {
-					p.sendMessage(ChatColor.RED + "The game is not running!");
+					p.sendMessage(ChatColor.RED + "이 게임은 진행중이 아닙니다!");
 					event.setCancelled(true);
 					return;
 				}
