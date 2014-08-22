@@ -37,7 +37,7 @@ public class Util {
 	}
 
 	public static void msg(CommandSender sender, String s) {
-		sender.sendMessage(ChatColor.DARK_RED + "[" + ChatColor.DARK_AQUA + "HungerGames" +ChatColor.DARK_RED +"] " + ChatColor.AQUA + ChatColor.translateAlternateColorCodes('&', s)); 
+		sender.sendMessage(ChatColor.AQUA + "[PMGO-L] " + ChatColor.WHITE + ChatColor.translateAlternateColorCodes('&', s)); 
 	}
 	
 	public static void scm(CommandSender sender, String s) {
@@ -45,7 +45,7 @@ public class Util {
 	}
 
 	public static void broadcast(String s) { 
-		Bukkit.getServer().broadcastMessage(ChatColor.DARK_RED + "[" + ChatColor.DARK_AQUA + "HungerGames" +ChatColor.DARK_RED +"] " + ChatColor.AQUA + ChatColor.translateAlternateColorCodes('&', s)); 
+		Bukkit.getServer().broadcastMessage(ChatColor.AQUA + "[PMGO-L] " + ChatColor.WHITE + ChatColor.translateAlternateColorCodes('&', s)); 
 	}
 
 	public static boolean isInt(String str) {
@@ -83,7 +83,7 @@ public class Util {
 		for (String s : win) {
 			count++;
 			if (count == 1) bc = s;
-			else if (count == win.size()) bc = bc + ", and " + s;
+			else if (count == win.size()) bc = bc + ", 와 " + s;
 			else bc = bc + ", " + s;
 		}
 		return bc;
